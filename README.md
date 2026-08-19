@@ -1,20 +1,41 @@
-# README: Setting Up Your Environment with Pipenv
+# AI Medical Assistant (RAG Pipeline)
 
-## Prerequisite: Install Pipenv
-Follow the official Pipenv installation guide to set up Pipenv on your system:  
-[Install Pipenv Documentation](https://pipenv.pypa.io/en/latest/installation.html)
-
----
-
-## Steps to Set Up the Environment
-
-### Install Required Packages
-Run the following commands in your terminal (assuming Pipenv is already installed):
-
-```bash
-pipenv install langchain langchain_community langchain_huggingface faiss-cpu pypdf
-pipenv install huggingface_hub
-pipenv install streamlit
+A context-aware medical question-answering assistant implementing Retrieval-Augmented Generation (RAG). The system processes unstructured medical documentation, constructs dense vector embeddings, and performs semantic similarity search using FAISS to ground LLM responses in verified medical references.
 
 
+## Architecture Overview
+Raw Documents (PDFs) ──> Text Chunking ──> Embeddings Generation
+│
+▼
+User Query ──> Dense Retrieval (FAISS) ──> Context Assembly ──> LLM Response
 
+Set up a virtual environment:
+
+Bash
+# Using pip
+python -m venv venv
+source venv/bin/activate  # On Windows use: venv\Scripts\activate
+pip install -r requirements.txt
+
+Execution Workflow
+1. Build the Vector Store
+Process the source files in data/ and serialize the FAISS embeddings index:
+
+Bash
+python create_memory_for_llm.py
+2. Start the Application
+Initialize the retrieval chain and start the query interface:
+
+Bash
+python medibot.py
+Technical Specifications
+Language: Python 3.10+
+
+Framework: LangChain
+
+Vector Engine: FAISS (Facebook AI Similarity Search)
+
+Embedding Model: Hugging Face sentence-transformers
+
+Medical Disclaimer
+This project is built for research and demonstration purposes only. It is not evaluated for clinical decision-making or diagnostic use. Consult qualified healthcare professionals for medical advice and treatment.
